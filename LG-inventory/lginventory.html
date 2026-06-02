@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LG Trader - Live Diamond Inventory</title>
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5}
+header{background:#111;color:#fff;padding:20px;text-align:center}
+.wrap{max-width:1500px;margin:auto;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:20px}
+.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.card img{width:100%;height:280px;object-fit:cover}
+.c{padding:16px}
+.title{font-size:24px;font-weight:bold}
+.badge{display:inline-block;background:#e8f7ee;color:#1a7f37;padding:6px 12px;border-radius:20px;margin:10px 0;font-size:13px;font-weight:bold}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin:10px 0}
+.price{font-size:30px;font-weight:bold;margin-top:10px}
+.rate{font-size:18px}
+.btns a{display:inline-block;background:#111;color:#fff;text-decoration:none;padding:10px 12px;border-radius:8px;margin:4px;font-size:13px}
+.search{width:100%;padding:12px;margin-bottom:20px;border-radius:8px;border:1px solid #ddd}
+</style>
+</head>
+<body>
+<header>
+<h1>LG Trader</h1>
+<p>Live Lab Grown Diamond Inventory</p>
+</header>
+
+<div class="wrap">
+<input id="search" class="search" placeholder="Search Stone ID, Color, Clarity">
+
+<div id="grid" class="grid"></div>
+</div>
+
+<script>
+let inventory=[];
+
+fetch("https://script.google.com/macros/s/AKfycbyOrtZDIrXdenarjgVT4VWxZYOkugGk3ObEzgvKV5QJdrx-fkHGEx3hMeShBJ0fCfYi/exec")
+.then(response => response.json())
+.then(data => {
+    inventory = data;
+    render(inventory);
+})
+.catch(error => {
+    console.error("Inventory Error:", error);
+});
+
+function render(rows){
+const q=(document.getElementById('search').value||'').toLowerCase();
+
+document.getElementById('grid').innerHTML=rows.filter(r=>JSON.stringify(r).toLowerCase().includes(q)).map(d=>`
+<div class="card">
+<img src="${d['ImgURL']||''}" onerror="this.src='https://via.placeholder.com/600x400?text=Diamond'">
+
+<div class="c">
+
+<div class="title">${d['Weight']} Ct ${d['Shape']} Diamond</div>
+
+<div class="badge">🟢 Ready to Ship</div>
+
+<div><b>Stone ID :</b> ${d['Stone ID']}</div>
+
+<div class="specs">
+<div><b>Color :</b> ${d['Color']}</div>
+<div><b>Clarity :</b> ${d['Clarity']}</div>
+
+<div><b>Cut :</b> ${d['Cut']}</div>
+<div><b>Polish :</b> ${d['Polish']}</div>
+
+<div><b>Symm. :</b> ${d['Symmetry']}</div>
+<div><b>Lab :</b> ${d['Lab']}</div>
+</div>
+
+<div><b>Measurements :</b> ${d['Measurements']}</div>
+
+<hr>
+
+<div class="rate"><b>Rate/Ct :</b> $${d['System Price']}</div>
+
+<div class="price">$${d['System Amount']}</div>
+
+<div class="btns">
+<a href="${d['Certi. PDF URL']}" target="_blank">Certificate</a>
+<a href="${d['V360']}" target="_blank">360° View</a>
+<a target="_blank" href="https://wa.me/?text=Interested%20in%20Stone%20ID%20${encodeURIComponent(d['Stone ID']||'')}">WhatsApp</a>
+</div>
+
+</div>
+</div>`).join('');
+}
+
+document.addEventListener('input',()=>render(inventory));
+</script>
+</body>
+</html>

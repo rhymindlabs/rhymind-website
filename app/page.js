@@ -11,13 +11,15 @@ export default function RhymindLabsWebsite() {
               LAB GROWN DIAMOND MANUFACTURER
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
-              Rhymind Labs
-              <span className="block text-zinc-400 mt-2">
-                Private B2B Diamond Supply Platform
-              </span>
-            </h1>
+           <div>
+  <h4 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
+    Rhymind Labs Pvt Ltd.
+  </h4>
 
+  <h5 className="block text-zinc-200 mt-3 text-2xl lg:text-4xl font-medium">
+    Lab Grown Diamond Source For Jewellers
+  </h5>
+</div>
             <p className="mt-8 text-zinc-300 text-lg leading-8 max-w-xl">
               Certified lab grown diamonds for jewellers, retailers and manufacturers.
               Access live inventory, HD videos, certificates and dealer pricing directly on WhatsApp.
@@ -32,7 +34,7 @@ export default function RhymindLabsWebsite() {
               </a>
 
               <a
-                href="https://wa.me/919999999999"
+                href="https://wa.me/917007715017"
                 target="_blank"
                 className="px-8 py-4 rounded-2xl border border-zinc-700 hover:border-emerald-500 transition"
               >
